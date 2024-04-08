@@ -7,3 +7,24 @@ service SmartMeetingRooms {
     rpc BookRoom(BookRoomRequest) returns (BookRoomResponse);
     rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse);
 }
+
+//Defining messages for the method
+message BookRoomRequest {
+    string roomId = 1;
+    string startTime = 2;
+    string endTime = 3;
+    string organizer = 4;
+}
+
+message BookRoomResponse {
+    string bookingId = 1;
+    string status = 2;
+}
+
+message CancelBookingRequest {
+    string bookingId = 1;
+}
+
+message CancelBookingResponse {
+    string status = 1;
+}
