@@ -8,6 +8,8 @@ service ClimateControl {
     rpc AdjustHumidity(AdjustHumidityRequest) returns (AdjustHumidityResponse);
 }
 
+//Defining messages for the methods
+
 message AdjustTemperatureRequest {
     double targetTemperature = 1;
 }
