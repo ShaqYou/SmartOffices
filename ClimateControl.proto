@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package smartoffice;
+
+//Defning the methods for Climate Control service
+service ClimateControl {
+    rpc AdjustTemperature(AdjustTemperatureRequest) returns (AdjustTemperatureResponse);
+    rpc AdjustHumidity(AdjustHumidityRequest) returns (AdjustHumidityResponse);
+}
