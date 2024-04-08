@@ -7,3 +7,19 @@ service ClimateControl {
     rpc AdjustTemperature(AdjustTemperatureRequest) returns (AdjustTemperatureResponse);
     rpc AdjustHumidity(AdjustHumidityRequest) returns (AdjustHumidityResponse);
 }
+
+message AdjustTemperatureRequest {
+    double targetTemperature = 1;
+}
+
+message AdjustTemperatureResponse {
+    string status = 1;
+}
+
+message AdjustHumidityRequest {
+    int32 airflowLevel = 1;
+}
+
+message AdjustHumidityResponse {
+    string status = 1;
+}
