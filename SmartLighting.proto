@@ -12,3 +12,20 @@ service SmartLighting {
 }
 
 
+// Defining messages for the method
+
+message TurnOnOffLightsRequest {
+    bool isTurnedOn = 1;
+}
+
+message TurnOnOffLightsResponse {
+    string status = 1;
+}
+
+message AdjustBrightnessRequest {
+    int32 brightnessLevel = 1;
+}
+
+message AdjustBrightnessResponse {
+    string status = 1;
+}
