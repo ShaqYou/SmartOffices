@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package smartoffice;
+
+//Defining two methods for smart lighting
+//Turning the lights on and TurnOnOffLight
+//Adjusting the brightness of the lights
+
+service SmartLighting {
+    rpc TurnOnOffLights(TurnOnOffLightsRequest) returns (TurnOnOffLightsResponse);
+    rpc AdjustBrightness(AdjustBrightnessRequest) returns (AdjustBrightnessResponse);
+}
+
+
