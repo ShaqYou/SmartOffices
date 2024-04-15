@@ -6,3 +6,13 @@ const readline = require('readline');
 const packageDefinition = protoLoader.loadSync('SmartOffice.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
 const client = new smartOfficeProto.SmartOffice('localhost:50051', grpc.credentials.createInsecure());
+
+//Creating an interface for user Input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+function askQuestion(query) {
+    return new Promise(resolve => rl.question(query, resolve));
+}
