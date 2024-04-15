@@ -11,7 +11,7 @@ const server = new grpc.Server();
 
 //Implementing methods
 server.addService(smartOfficeProto.SmartOffice.service, {
-  ToggleLights: (call, callback) => {
+  TurnOnOffLights: (call, callback) => {
       const { on } = call.request;
       const status = on ? 'Lights turned on' : 'Lights turned off';
       console.log(status);
@@ -24,4 +24,14 @@ server.addService(smartOfficeProto.SmartOffice.service, {
       console.log(status);
       callback(null, { status });
   },
+});
+
+//Binding the server
+server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(), (err, port) => {
+  if (err != null) {
+      console.error(err);
+      return;
+  }
+  server.start();
+  console.log(`Lighting System Server running at http://127.0.0.1:${port}`);
 });
