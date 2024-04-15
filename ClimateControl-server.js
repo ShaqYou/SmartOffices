@@ -1,15 +1,10 @@
 //Importing the required parts
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-const packageDefintion = protoLoader.loadSync('ClimateControl.proto', {});
-const ClimateControlProto = grpc.loadPackageDefinition.ClimateControl;
+// Loading the proto file
+const packageDefinition = protoLoader.loadSync('SmartOffice.proto');
+const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
 
-const {
-    ClimateControlServiceService,
-    AdjustTemperatureResponse,
-    AdjustHumidityResponse,
-  } = require("./generated/climatecontrol_grpc_pb");
-  const {
-    AdjustTemperatureRequest,
-    AdjustHumidityRequest,
-  } = require("./generated/climatecontrol_pb");
+
+//gRPC server
+const server= new grpc.Server();
