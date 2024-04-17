@@ -37,3 +37,13 @@ function generateBookingId() {
   nextBookingId++;
   return bookingId;
 }
+
+// Binding to port
+server.bindAsync('127.0.0.1:50053', grpc.ServerCredentials.createInsecure(), (err, port) => {
+  if (err != null) {
+    console.error(err);
+    return;
+  }
+  server.start();
+  console.log(`Smart Meeting Rooms Server running at http://127.0.0.1:${port}`);
+});

@@ -66,3 +66,4 @@ const userInput = readline.createInterface({
     });
   }
   
+  main();
