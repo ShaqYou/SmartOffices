@@ -20,3 +20,18 @@ const rl = readline.createInterface({
     return new Promise(resolve => rl.question(query, resolve));
   }
   
+  async function main() {
+    const choice = await askQuestion('Insert (1) to book a room or (2) to cancel a booking!');
+    switch (choice) {
+      case '1':
+        await bookRoom();
+        break;
+      case '2':
+        await cancelBooking();
+        break;
+      default:
+        console.log('Invalid choice');
+        rl.close();
+        break;
+    }
+  }
