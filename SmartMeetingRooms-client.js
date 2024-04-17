@@ -9,3 +9,14 @@ const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_off
 
 //Create the client
 const client = new smartOfficeProto.SmartMeetingRooms('localhost:50053', grpc.credentials.createInsecure());
+
+//Functions for user input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  
+  function askQuestion(query) {
+    return new Promise(resolve => rl.question(query, resolve));
+  }
+  
