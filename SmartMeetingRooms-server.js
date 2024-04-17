@@ -27,3 +27,13 @@ server.addService(smartOfficeProto.SmartMeetingRooms.service, {
     callback(null, { success: true }); // Respond with success
   },
 });
+
+
+//Implement generateBookingId method
+let nextBookingId = 1;
+
+function generateBookingId() {
+  const bookingId = `BOOKING_ID_${nextBookingId}`;
+  nextBookingId++;
+  return bookingId;
+}
