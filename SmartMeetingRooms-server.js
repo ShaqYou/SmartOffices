@@ -3,41 +3,33 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
 // Load the proto file
-const packageDefinition = protoLoader.loadSync('SmartOffice.proto');
-const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
+const packageDefinition = protoLoader.loadSync('SmartMeetingRoom.proto');
+const smartMeetingRoomProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
 // Define gRPC server
 const server = new grpc.Server();
 
 // Implement methods
 server.addService(smartOfficeProto.SmartMeetingRooms.service, {
-  BookRoom: (call, callback) => {
-    const roomId = call.request.room_id;
-    const meetingTime = call.request.meeting_time;
-    const meetingDuration = call.request.meeting_duration;
-    console.log(`Booking room ${roomId} for meeting at ${meetingTime} for duration ${meetingDuration}`);
-    // Writing implementation later
-    const bookingId = generateBookingId(); 
-    callback(null, { success: true, booking_id: bookingId }); 
-  },
-  CancelBooking: (call, callback) => {
-    const bookingId = call.request.booking_id;
-    console.log(`Canceling booking with ID ${bookingId}`);
-    // Writing implementation later
-    callback(null, { success: true }); // Respond with success
+  BookRoomWithUpdates: (call) => {
+    call.on('data', (request) => {
+      const { roomId, startTime, endTime, organizer } = request;
+      console.log(`Received booking request for room ${roomId} from ${organizer} starting at ${startTime} until ${endTime}`);
+      // Booking logic
+      const bookingId = generateBookingId();
+      call.write({ bookingId, status: 'Booking request received' });
+    });
+    call.on('end', () => {
+      console.log('Booking process ended.');
+      call.end();
+    });
   },
 });
 
-
-//Implement generateBookingId method
-let nextBookingId = 1;
-
 function generateBookingId() {
-  const bookingId = `BOOKING_ID_${nextBookingId}`;
-  nextBookingId++;
-  return bookingId;
+  // Implementation to generate unique booking ID
+  return `BOOKING_ID_${Math.floor(Math.random() * 1000)}`;
 }
-
 // Binding to port
 server.bindAsync('127.0.0.1:50053', grpc.ServerCredentials.createInsecure(), (err, port) => {
   if (err != null) {
