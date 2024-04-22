@@ -155,7 +155,71 @@ function controlSmartLighting() {
 
   //Function for Smart Meeting Rooms Service
   function controlSmartMeetingRooms(){
+     
+  console.log('Smart Lighting Service');
 
+  // Function to turn on/off lights
+  function turnOnOffLights() {
+    // Prompt user to choose action
+    console.log('Choose action:');
+    console.log('1. Turn lights on');
+    console.log('2. Turn lights off');
+    console.log('3. Back');
+
+    rl.question('Enter your choice: ', (choice) => {
+      switch (choice) {
+        case '1':
+          // Unary RPC to turn on lights
+          smartLightingClient.TurnOnOffLights({ isTurnedOn: true }, (error, response) => {
+            if (error) {
+              console.error('Error:', error.message);
+            } else {
+              console.log('TurnOnOffLights Response:', response.status);
+            }
+          });
+          break;
+        case '2':
+          // Unary RPC to turn off lights
+          smartLightingClient.TurnOnOffLights({ isTurnedOn: false }, (error, response) => {
+            if (error) {
+              console.error('Error:', error.message);
+            } else {
+              console.log('TurnOnOffLights Response:', response.status);
+            }
+          });
+          break;
+        case '3':
+          // Return to main menu
+          main();
+          break;
+        default:
+          console.log('Invalid choice.');
+          // Retry
+          controlSmartLighting();
+      }
+    });
+  }
+
+  // Prompt user to choose action
+  console.log('Choose action:');
+  console.log('1. Turn lights on/off');
+  console.log('2. Back');
+
+  rl.question('Enter your choice: ', (choice) => {
+    switch (choice) {
+      case '1':
+        turnOnOffLights();
+        break;
+      case '2':
+        // Return to main menu
+        main();
+        break;
+      default:
+        console.log('Invalid choice.');
+        // Retry
+        controlSmartLighting();
+    }
+  });
   }
 
   // Main function to run the CLI
