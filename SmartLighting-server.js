@@ -2,27 +2,33 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const packageDefinition = protoLoader.loadSync('SmartOffice.proto');
+const packageDefinition = protoLoader.loadSync('Smartlighting.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
 
 
 //Creating a rpc server
 const server = new grpc.Server();
-
-//Implementing methods
-server.addService(smartOfficeProto.SmartOffice.service, {
+// Implement methods
+server.addService(smartOfficeProto.SmartLighting.service, {
   TurnOnOffLights: (call, callback) => {
-      const { on } = call.request;
-      const status = on ? 'Lights turned on' : 'Lights turned off';
-      console.log(status);
-      callback(null, { status });
+    const isTurnedOn = call.request.isTurnedOn;
+    const status = isTurnedOn ? 'Lights turned on' : 'Lights turned off';
+    console.log(status);
+    callback(null, { status });
   },
 
-  AdjustBrightness: (call, callback) => {
-      const { brightnessLevel } = call.request;
-      const status = `Brightness adjusted to ${brightnessLevel}`;
-      console.log(status);
-      callback(null, { status });
+  AdjustBrightnessStream: (call) => {
+    call.on('data', (request) => {
+      const { brightnessLevel } = request;
+      console.log(`Received brightness adjustment request: ${brightnessLevel}`);
+      // Process brightness adjustment logic here
+      const status = 'Brightness adjusted successfully';
+      call.write({ status });
+    });
+    call.on('end', () => {
+      console.log('Brightness adjustment process ended.');
+      call.end();
+    });
   },
 });
 

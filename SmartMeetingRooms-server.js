@@ -4,7 +4,7 @@ const protoLoader = require('@grpc/proto-loader');
 
 // Load the proto file
 const packageDefinition = protoLoader.loadSync('SmartMeetingRoom.proto');
-const smartMeetingRoomProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
+const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
 // Define gRPC server
 const server = new grpc.Server();
