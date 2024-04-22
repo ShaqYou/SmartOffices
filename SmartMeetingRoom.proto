@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package smartoffice;
+
+service SmartMeetingRooms {
+    rpc BookRoomWithUpdates(stream BookRoomRequest) returns (stream BookRoomResponse);
+}
+
+message BookRoomRequest {
+    string roomId = 1;
+    string startTime = 2;
+    string endTime = 3;
+    string organizer = 4;
+}
+
+message BookRoomResponse {
+    string bookingId = 1;
+    string status = 2;
+}
