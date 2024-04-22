@@ -31,7 +31,57 @@ function displayMenu() {
 
   // Function for Climate Control Service
   function controlClimateControl(){
+    console.log('Climate Control Service');
 
+    // Function to adjust settings stream
+    function adjustSettingsStream() {
+      const settingsStream = climateControlClient.AdjustSettingsStream((error, response) => {
+        if (error) {
+          console.error('Error:', error.message);
+        } else {
+          console.log('SettingsResponse:', response.status);
+        }
+      });
+  
+      // Handle stream errors
+      settingsStream.on('error', (error) => {
+        console.error('Stream Error:', error.message);
+      });
+  
+      // Prompt user to enter setting values
+      rl.question('Enter setting values (comma-separated): ', (input) => {
+        const values = input.split(',').map(value => parseInt(value.trim(), 10));
+  
+        // Send setting adjustment requests
+        values.forEach(value => {
+          settingsStream.write({ settingValue: value });
+        });
+  
+        // End the stream
+        settingsStream.end();
+      });
+    }
+  
+    // Prompt user to choose action
+    console.log('Choose action:');
+    console.log('1. Adjust settings');
+    console.log('2. Back');
+  
+    rl.question('Enter your choice: ', (choice) => {
+      switch (choice) {
+        case '1':
+          adjustSettingsStream();
+          break;
+        case '2':
+          // Return to main menu
+          main();
+          break;
+        default:
+          console.log('Invalid choice.');
+          // Retry
+          controlClimateControl();
+      }
+    });
   }
   
   //Function for Smart Lighting Service
