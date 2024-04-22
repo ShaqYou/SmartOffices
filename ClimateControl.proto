@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package smartoffice;
+
+service ClientControl {
+    rpc AdjustSettingsStream(stream SettingsRequest) returns (SettingsResponse);
+}
+
+message SettingsRequest {
+    int32 settingValue = 1;
+}
+
+message SettingsResponse {
+    string status = 1;
+}
