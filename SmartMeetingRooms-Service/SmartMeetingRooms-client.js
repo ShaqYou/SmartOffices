@@ -2,7 +2,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const packageDefinition = protoLoader.loadSync('SmartMeetingRooms.proto');
+const packageDefinition = protoLoader.loadSync('Proto/SmartMeetingRooms.proto');
 const smartMeetingRoomProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
 const client = new smartMeetingRoomProto.SmartMeetingRooms('localhost:50052', grpc.credentials.createInsecure());

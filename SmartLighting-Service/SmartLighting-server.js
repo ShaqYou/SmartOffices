@@ -2,7 +2,7 @@
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const packageDefinition = protoLoader.loadSync('Smartlighting.proto');
+const packageDefinition = protoLoader.loadSync('Proto/Smartlighting.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
 
 
