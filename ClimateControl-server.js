@@ -2,26 +2,27 @@
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 // Loading the proto file
-const packageDefinition = protoLoader.loadSync('SmartOffice.proto');
+const packageDefinition = protoLoader.loadSync('ClimateControl.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
 
 
 //gRPC server
 const server= new grpc.Server();
 
-//Implementing methods for Climate Control 
-server.addService(SmartOfficeProto.service, {
-  //For Temperature
-  AdjustTemperature: (call, callback) => {
-    const targetTemperature = call.request.targetTemperature;
-    console.log(`Adjusting temperature to ${targetTemperature} degrees.`);
-    callback(null, { status: 'Temperature adjusted successfully.' });
-  },
-  //For Humidity
-    AdjustHumidity: (call, callback) => {
-    const himidityLevel = call.request.humidityLevel;
-    console.log(`Adjusting humidity: ${humidityLevel}`);
-    callback(null, { status: 'Humidity adjusted successfully.' });
+server.addService(smartOfficeProto.ClientControl.service, {
+  AdjustSettingsStream: (call, callback) => {
+    let maxSettingValue = -1;
+    call.on('data', (request) => {
+      const { settingValue } = request;
+      console.log(`Received setting adjustment request: ${settingValue}`);
+      if (settingValue > maxSettingValue) {
+        maxSettingValue = settingValue;
+      }
+    });
+    call.on('end', () => {
+      console.log(`Adjustment process ended. Maximum setting value received: ${maxSettingValue}`);
+      callback(null, { status: `Maximum setting value received: ${maxSettingValue}` });
+    });
   },
 });
 
