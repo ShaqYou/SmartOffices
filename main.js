@@ -26,3 +26,54 @@ function displayMenu() {
     console.log('3. Control Smart Meeting Rooms Service');
     console.log('4. Exit');
   }
+
+  // Functions for 3 services
+
+  // Function for Climate Control Service
+  function controlClimateControl(){
+
+  }
+  
+  //Function for Smart Lighting Service
+  function controlSmartLighting(){
+
+  }
+
+  //Function for Smart Meeting Rooms Service
+  function controlSmartMeetingRooms(){
+
+  }
+
+  // Main function to run the CLI
+  function main() {
+    displayMenu();
+  }
+
+  rl.question('Enter your choice: ', (choice) => {
+    switch (choice) {
+      case '1':
+        controlClimateControl();
+        break;
+      case '2':
+        controlSmartLighting();
+        break;
+      case '3':
+        controlSmartMeetingRooms();
+        break;
+      case '4':
+        console.log('Exiting...');
+        rl.close();
+        return;
+      default:
+        console.log('Invalid choice.');
+    }
+
+    // Recursive call to display menu again
+    main();
+  });
+
+
+// Start the CLI
+main();
+
+
