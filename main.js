@@ -3,9 +3,9 @@ const protoLoader = require('@grpc/proto-loader');
 const readlineSync = require('readline-sync');
 
 // Load proto files
-const smartLightingProtoDefinition = protoLoader.loadSync('./Proto/SmartLighting.proto');
-const smartMeetingRoomsProtoDefinition = protoLoader.loadSync('./Proto/SmartMeetingRoom.proto');
-const climateControlProtoDefinition = protoLoader.loadSync('./Proto/ClimateControl.proto');
+const smartLightingProtoDefinition = protoLoader.loadSync('Proto/SmartLighting.proto');
+const smartMeetingRoomsProtoDefinition = protoLoader.loadSync('Proto/SmartMeetingRoom.proto');
+const climateControlProtoDefinition = protoLoader.loadSync('Proto/ClimateControl.proto');
 
 // Load proto definitions
 const smartLightingProto = grpc.loadPackageDefinition(smartLightingProtoDefinition).smartoffice;

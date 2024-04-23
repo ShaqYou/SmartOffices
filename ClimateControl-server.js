@@ -2,14 +2,14 @@
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 // Loading the proto file
-const packageDefinition = protoLoader.loadSync('./Proto/ClimateControl.proto');
-const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smart_office;
+const packageDefinition = protoLoader.loadSync('Proto/ClimateControl.proto');
+const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
 
 //gRPC server
 const server= new grpc.Server();
 
-server.addService(smartOfficeProto.ClientControl.service, {
+server.addService(smartOfficeProto.ClimateControl.service, {
   AdjustSettingsStream: (call, callback) => {
     let maxSettingValue = -1;
     call.on('data', (request) => {
