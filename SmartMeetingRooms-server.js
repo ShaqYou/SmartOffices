@@ -28,7 +28,7 @@ server.addService(smartOfficeProto.SmartMeetingRooms.service, {
 });
 
 function generateBookingId() {
-  // Implementation to generate unique booking ID
+  // Generate unique booking ID
   return `BOOKING_ID_${Math.floor(Math.random() * 1000)}`;
 }
 // Binding to port
