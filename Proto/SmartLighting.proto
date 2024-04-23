@@ -2,22 +2,10 @@ syntax = "proto3";
 
 package smartoffice;
 
-// Service definition for SmartLighting
+//Unary and Server side rpc used
 service SmartLighting {
-    // Method to turn on/off lights
     rpc TurnOnOffLights(TurnOnOffLightsRequest) returns (TurnOnOffLightsResponse);
-
-    // Method to adjust brightness
     rpc AdjustBrightnessStream(stream AdjustBrightnessRequest) returns (stream AdjustBrightnessResponse);
-
-    // Method to toggle lights
-    rpc ToggleLights(Empty) returns (TurnOnOffLightsResponse);
-
-    // Method to get the current status of lights
-    rpc GetLightStatus(Empty) returns (TurnOnOffLightsResponse);
-
-    // Method to schedule lights to turn on/off at specific times
-    rpc ScheduleLights(ScheduleLightsRequest) returns (ScheduleLightsResponse);
 }
 
 message TurnOnOffLightsRequest {
@@ -35,19 +23,3 @@ message AdjustBrightnessRequest {
 message AdjustBrightnessResponse {
     string status = 1;
 }
-
-message ScheduleLightsRequest {
-    repeated ScheduleTime scheduleTimes = 1;
-}
-
-message ScheduleLightsResponse {
-    string status = 1;
-}
-
-message ScheduleTime {
-    string startTime = 1;
-    string endTime = 2;
-}
-
-// Empty message used when no parameters are needed
-message Empty {}
