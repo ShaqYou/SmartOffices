@@ -31,7 +31,7 @@ function generateBookingId() {
   return `BOOKING_ID_${Math.floor(Math.random() * 1000)}`;
 }
 // Binding to port
-server.bindAsync('127.0.0.1:50053', grpc.ServerCredentials.createInsecure(), (err, port) => {
+server.bindAsync('127.0.0.1:50052', grpc.ServerCredentials.createInsecure(), (err, port) => {
   if (err != null) {
     console.error(err);
     return;

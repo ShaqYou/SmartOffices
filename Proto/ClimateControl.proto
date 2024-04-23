@@ -2,8 +2,22 @@ syntax = "proto3";
 
 package smartoffice;
 
+// Service definition for ClimateControl
 service ClimateControl {
+    // Method to adjust settings via a stream of requests
     rpc AdjustSettingsStream(stream SettingsRequest) returns (SettingsResponse);
+
+    // Method to view current settings
+    rpc ViewSettings(Empty) returns (SettingsResponse);
+
+    // Method to set new settings
+    rpc SetSettings(SettingsRequest) returns (SettingsResponse);
+
+    // Method to get the current settings
+    rpc GetCurrentSettings(Empty) returns (SettingsResponse);
+
+    // Method to reset settings to default
+    rpc ResetSettings(Empty) returns (SettingsResponse);
 }
 
 message SettingsRequest {
@@ -12,4 +26,8 @@ message SettingsRequest {
 
 message SettingsResponse {
     string status = 1;
+    int32 currentSetting = 2; 
 }
+
+// Empty message used when no parameters are needed
+message Empty {}

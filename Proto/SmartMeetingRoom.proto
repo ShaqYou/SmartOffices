@@ -2,8 +2,16 @@ syntax = "proto3";
 
 package smartoffice;
 
+// Service definition for SmartMeetingRooms
 service SmartMeetingRooms {
+    // Method to book a meeting room with updates
     rpc BookRoomWithUpdates(stream BookRoomRequest) returns (stream BookRoomResponse);
+
+    // Method to get the list of booked meeting rooms
+    rpc GetBookedRooms(Empty) returns (stream BookRoomResponse);
+
+    // Method to cancel a booked meeting room
+    rpc CancelBookedRoom(CancelBookedRoomRequest) returns (CancelBookedRoomResponse);
 }
 
 message BookRoomRequest {
@@ -17,3 +25,14 @@ message BookRoomResponse {
     string bookingId = 1;
     string status = 2;
 }
+
+message CancelBookedRoomRequest {
+    string bookingId = 1;
+}
+
+message CancelBookedRoomResponse {
+    string status = 1;
+}
+
+// Empty message used when no parameters are needed
+message Empty {}

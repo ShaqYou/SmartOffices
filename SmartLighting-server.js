@@ -1,4 +1,3 @@
-//Importing the required parts
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
@@ -6,9 +5,11 @@ const packageDefinition = protoLoader.loadSync('Proto/SmartLighting.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
 console.log(smartOfficeProto);
-//Creating a rpc server
+
+// Creating a gRPC server
 const server = new grpc.Server();
-// Implement methods
+
+// Implementing methods
 server.addService(smartOfficeProto.SmartLighting.service, {
   TurnOnOffLights: (call, callback) => {
     const isTurnedOn = call.request.isTurnedOn;
@@ -18,6 +19,7 @@ server.addService(smartOfficeProto.SmartLighting.service, {
   },
 
   AdjustBrightnessStream: (call) => {
+    console.log('Received brightness adjustment stream request');
     call.on('data', (request) => {
       const { brightnessLevel } = request;
       console.log(`Received brightness adjustment request: ${brightnessLevel}`);
@@ -32,11 +34,11 @@ server.addService(smartOfficeProto.SmartLighting.service, {
   },
 });
 
-//Binding the server
+// Binding the server
 server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(), (err, port) => {
   if (err != null) {
-      console.error(err);
-      return;
+    console.error(err);
+    return;
   }
   server.start();
   console.log(`Lighting System Server running at http://127.0.0.1:${port}`);

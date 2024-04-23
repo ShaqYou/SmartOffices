@@ -82,19 +82,21 @@ function controlClimateControl() {
 function controlSmartLighting() {
   console.log('Smart Lighting Service');
 
-  // Function to turn on/off lights
   function turnOnOffLights(isTurnedOn) {
     // Unary RPC to turn on/off lights
     smartLightingClient.TurnOnOffLights({ isTurnedOn }, (error, response) => {
       if (error) {
         console.error('Error:', error.message);
-      } else {
-        console.log('TurnOnOffLights Response:', response.status);
+        // Handle the error appropriately, 
+        //  e.g., display an error message to the user
+        return;  // Exit the callback function on error
       }
-      // Return to main menu
-      return main();
+      console.log('TurnOnOffLights Response:', response.status);
+      // Return to main menu after successful response
+      main();
     });
   }
+
 
   // Function to adjust brightness stream
   function adjustBrightnessStream() {

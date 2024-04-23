@@ -1,37 +1,33 @@
-//Importing the required parts
-const grpc = require("@grpc/grpc-js");
-const protoLoader = require("@grpc/proto-loader");
-// Loading the proto file
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+
+// Load the Climate Control proto file
 const packageDefinition = protoLoader.loadSync('Proto/ClimateControl.proto');
-const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
+const smartofficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
+// gRPC server
+const server = new grpc.Server();
 
-//gRPC server
-const server= new grpc.Server();
+// Placeholder variable for storing current setting
+let currentSetting = 25; // Default value
 
-server.addService(smartOfficeProto.ClimateControl.service, {
-  AdjustSettingsStream: (call, callback) => {
-    let maxSettingValue = -1;
-    call.on('data', (request) => {
-      const { settingValue } = request;
-      console.log(`Received setting adjustment request: ${settingValue}`);
-      if (settingValue > maxSettingValue) {
-        maxSettingValue = settingValue;
-      }
-    });
-    call.on('end', () => {
-      console.log(`Adjustment process ended. Maximum setting value received: ${maxSettingValue}`);
-      callback(null, { status: `Maximum setting value received: ${maxSettingValue}` });
-    });
-  },
+// Implement the Climate Control service
+server.addService(smartofficeProto.ClimateControl.service, {
+    AdjustSettingsStream: (call, callback) => {
+        // Implementation for adjusting settings
+    },
+    ViewSettings: (call, callback) => {
+        // Respond with the current setting
+        callback(null, { currentSetting });
+    }
 });
 
-//Binding the server
-server.bindAsync('127.0.0.1:50051', grpc.ServerCredentials.createInsecure(), (err, port) => {
-  if (err != null) {
-    console.error(err);
-    return;
-  }
-  server.start();
-  console.log(`Climate Control Server running at http://127.0.0.1:${port}`);
-})
+// Binding the server
+server.bindAsync('127.0.0.1:50053', grpc.ServerCredentials.createInsecure(), (err, port) => {
+    if (err) {
+        console.error('Failed to start server:', err);
+        return;
+    }
+    server.start();
+    console.log(`Climate Control Server running at http://127.0.0.1:${port}`);
+});
