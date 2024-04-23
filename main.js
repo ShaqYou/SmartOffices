@@ -70,8 +70,7 @@ function controlClimateControl() {
       break;
     case '2':
       // Return to main menu
-      main();
-      break;
+      return main();
     default:
       console.log('Invalid choice.');
       // Retry
@@ -93,15 +92,36 @@ function controlSmartLighting() {
         console.log('TurnOnOffLights Response:', response.status);
       }
       // Return to main menu
-      main();
+      return main();
     });
+  }
+
+  // Function to adjust brightness stream
+  function adjustBrightnessStream() {
+    // Create a writable stream
+    const brightnessStream = smartLightingClient.AdjustBrightnessStream();
+
+    // Handle stream errors
+    brightnessStream.on('error', (error) => {
+      console.error('Stream Error:', error.message);
+    });
+
+    // Prompt user to enter brightness level
+    const brightnessLevel = readlineSync.question('Enter brightness level: ');
+
+    // Send brightness adjustment request
+    brightnessStream.write({ brightnessLevel: parseInt(brightnessLevel) });
+
+    // End the stream
+    brightnessStream.end();
   }
 
   // Prompt user to choose action
   console.log('Choose action:');
   console.log('1. Turn lights on');
   console.log('2. Turn lights off');
-  console.log('3. Back');
+  console.log('3. Adjust brightness');
+  console.log('4. Back');
 
   const choice = readlineSync.question('Enter your choice: ');
   switch (choice) {
@@ -112,9 +132,11 @@ function controlSmartLighting() {
       turnOnOffLights(false);
       break;
     case '3':
-      // Return to main menu
-      main();
+      adjustBrightnessStream();
       break;
+    case '4':
+      // Return to main menu
+      return main();
     default:
       console.log('Invalid choice.');
       // Retry
@@ -167,8 +189,7 @@ function controlSmartMeetingRooms() {
       break;
     case '2':
       // Return to main menu
-      main();
-      break;
+      return main();
     default:
       console.log('Invalid choice.');
       // Retry

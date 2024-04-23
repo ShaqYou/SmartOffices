@@ -5,7 +5,7 @@ const protoLoader = require('@grpc/proto-loader');
 const packageDefinition = protoLoader.loadSync('Proto/SmartLighting.proto');
 const smartOfficeProto = grpc.loadPackageDefinition(packageDefinition).smartoffice;
 
-
+console.log(smartOfficeProto);
 //Creating a rpc server
 const server = new grpc.Server();
 // Implement methods
