@@ -1,0 +1,17 @@
+{
+  "name": "smartoffices",
+  "version": "1.0.0",
+  "description": "A distributed system for a smart office",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shaqayeq",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.4.0",
+    "@grpc/proto-loader": "^0.5.0",
+    "readline-sync": "^1.4.10"
+  }
+}

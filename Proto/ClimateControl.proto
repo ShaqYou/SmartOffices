@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package smartoffice;
 
-service ClientControl {
+service ClimateControl {
     rpc AdjustSettingsStream(stream SettingsRequest) returns (SettingsResponse);
 }
 
